@@ -1,0 +1,36 @@
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        def charromantoint(c):
+            if c == 'I':
+                return 1
+            elif c == 'V':
+                return 5
+            elif c == 'X':
+                return 10
+            elif c == 'L':
+                return 50
+            elif c == 'C':
+                return 100
+            elif c == 'D':
+                return 500
+            elif c == 'M':
+                return 1000
+            else:
+                return 0
+
+        res = 0
+        i = 0
+        while i < len(s):
+            current = charromantoint(s[i])
+            next_val = charromantoint(s[i + 1]) if i + 1 < len(s) else 0
+            if current < next_val:
+                res += (next_val - current)
+                i += 2
+            else:
+                res += current
+                i += 1
+        return res
