@@ -1,0 +1,50 @@
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head or not head.next: return head
+        dummy = ListNode('s'); dummy.next = head; tmp = head
+        length = 0
+        while tmp:
+            tmp = tmp.next
+            length += 1
+        step = 1
+        while step<length:
+            cur, tail = dummy.next, dummy
+            while cur:
+                left = cur
+                right = self.split(left,step)
+                cur = self.split(right, step)
+                tail = self.merge2(left,right,tail)
+            step <<= 1
+        return dummy.next
+    
+    # merge 2 sorted lists, and append the result to head
+    # return the tail
+    def merge2(self, p1, p2, head):
+        dummy = ListNode('#');p = dummy
+        while p1 and p2:
+            if p1.val <= p2.val:
+                p.next = p1
+                p1 = p1.next; p = p.next
+            else:
+                p.next = p2
+                p2 = p2.next; p = p.next
+        p.next = p1 or p2
+        head.next = dummy.next
+        while p.next: p = p.next
+        return p
+
+    # divide the linked list into two lists
+    # first linked list contains n nodes
+    # return the head of second linked list
+    def split(self, head, n):
+        for i in range(n-1): 
+            if head: head = head.next
+            else: break
+        if not head: return None
+        second = head.next
+        head.next = None
+        return second
