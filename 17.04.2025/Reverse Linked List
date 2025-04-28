@@ -1,0 +1,14 @@
+class Solution(object):
+    def reverseList(self, head):
+        if head == None:
+            return head
+        else:
+            currentNode = head
+            previousNode = None
+            while currentNode :
+                nextNode = currentNode.next
+                currentNode.next = previousNode
+                previousNode = currentNode
+                currentNode = nextNode
+            return previousNode
+        
