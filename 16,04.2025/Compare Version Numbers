@@ -1,0 +1,39 @@
+class Solution(object):
+    def compareVersion(self, version1, version2):
+        """
+        :type version1: str
+        :type version2: str
+        :rtype: int
+        """
+        list1 = version1.split('.')
+        list2 = version2.split('.')
+        res1 = [ele.lstrip('0') for ele in list1]
+        res2 = [ele.lstrip('0') for ele in list2]
+        for index,value in enumerate(res1):
+            if value =='':
+                res1[index] = 0
+            else :
+                res1[index] = int(value)
+        for index,value in enumerate(res2):
+            if value =='':
+                res2[index] = 0
+            else :
+                res2[index] = int(value)
+        n = len(res1)
+        m = len(res2)
+        while n>m:
+            res2.append(0)
+            m+=1
+        while n<m:
+            res1.append(0)
+            n+=1
+        i = 0
+        while i < n:
+            if res1[i] == res2[i]:
+                i+=1
+                continue
+            elif res1[i] < res2[i]:
+                return -1
+            elif res1[i] > res2[i]:
+                return 1
+        return 0
